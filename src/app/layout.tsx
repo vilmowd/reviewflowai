@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Inter, Roboto_Mono } from "next/font/google";
 import { getCsrfTokenFromCookie, getCurrentUser } from "@/lib/auth";
+import { ConsentScripts } from "@/components/consent-scripts";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -30,6 +32,10 @@ export const viewport: Viewport = {
   ],
 };
 
+// GA4: equivalent to gtag.js; optional override via NEXT_PUBLIC_GA_MEASUREMENT_ID.
+const gaMeasurementId =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-32W9Q29NQL";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -45,6 +51,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+        <ConsentScripts />
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">
             <SiteHeader
@@ -58,6 +65,7 @@ export default async function RootLayout({
             <SiteFooter />
           </div>
         </ThemeProvider>
+        <GoogleAnalytics gaId={gaMeasurementId} />
       </body>
     </html>
   );
