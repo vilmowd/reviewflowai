@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { BrandMark } from "@/components/brand-mark";
 import { LogoutButton } from "@/components/logout-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -47,7 +48,7 @@ export function SiteHeader({ user, csrfToken }: SiteHeaderProps) {
           className="flex min-w-0 shrink items-center gap-2.5 sm:gap-3"
           onClick={() => setMenuOpen(false)}
         >
-          <div className="h-8 w-8 shrink-0 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-400 sm:h-9 sm:w-9" />
+          <BrandMark variant="header" />
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-slate-800 dark:text-slate-300">
               ReviewFlow AI

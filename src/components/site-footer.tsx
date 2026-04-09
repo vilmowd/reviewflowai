@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/brand-mark";
 
 const productLinks = [
   { href: "/", label: "Home" },
@@ -20,7 +21,7 @@ export function SiteFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-3">
-              <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-400" />
+              <BrandMark variant="footer" />
               <div>
                 <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
                   ReviewFlow AI
