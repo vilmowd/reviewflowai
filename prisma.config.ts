@@ -3,10 +3,11 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
-const databaseUrl = process.env["DATABASE_URL"];
-if (!databaseUrl) {
-  throw new Error("Missing DATABASE_URL");
-}
+// `generate` does not connect; a placeholder lets builds run when DATABASE_URL is unset.
+// `migrate deploy` and other commands that touch the DB must have a real DATABASE_URL.
+const databaseUrl =
+  process.env["DATABASE_URL"] ??
+  "postgresql://placeholder:placeholder@127.0.0.1:5432/placeholder";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",

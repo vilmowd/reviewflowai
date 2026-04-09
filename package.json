@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "prisma generate && next build",
+    "start": "prisma migrate deploy && next start",
     "lint": "next lint",
     "paypal:create-plan": "node scripts/create-paypal-plan.mjs"
   },
@@ -21,6 +21,7 @@
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "prisma": "^6.7.0",
     "stripe": "^22.0.1"
   },
   "devDependencies": {
@@ -31,7 +32,6 @@
     "@types/react-dom": "^18.3.7",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.35",
-    "prisma": "^6.7.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
