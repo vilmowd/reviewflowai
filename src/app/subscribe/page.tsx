@@ -19,10 +19,10 @@ export default async function SubscribePage() {
   const configured = Boolean(clientId && planId);
 
   return (
-    <section className="mx-auto max-w-2xl space-y-8 py-6 sm:py-10">
+    <section className="mx-auto max-w-2xl space-y-6 py-4 sm:space-y-8 sm:py-10">
       <div className="text-center">
         <p className="text-sm font-medium text-indigo-300">ReviewFlow AI Pro</p>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+        <h1 className="mt-3 text-balance text-2xl font-semibold tracking-tight text-white sm:text-4xl">
           $100 / year
         </h1>
         <p className="mt-3 text-sm text-slate-400 sm:text-base">
@@ -31,7 +31,7 @@ export default async function SubscribePage() {
         </p>
       </div>
 
-      <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8">
+      <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:rounded-3xl sm:p-8">
         <ul className="space-y-3 text-sm text-slate-300">
           {[
             "Unlimited business profiles",

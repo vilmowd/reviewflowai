@@ -54,7 +54,7 @@ export default async function SurveyPage({ params }: SurveyPageProps) {
   }
 
   return (
-    <section className="py-3 sm:py-8">
+    <section className="px-1 py-3 sm:px-4 sm:py-8">
       <SurveyFlow
         businessId={business.id}
         businessName={business.name}

@@ -126,10 +126,10 @@ export function BusinessProfileClient({
   }
 
   return (
-    <section className="space-y-6">
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+    <section className="space-y-5 sm:space-y-6">
+      <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 sm:p-6">
         <p className="text-sm font-medium text-indigo-300">Settings</p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-white">
+        <h1 className="mt-2 text-balance text-xl font-semibold tracking-tight text-white sm:text-2xl">
           Business Profile
         </h1>
         <p className="mt-1 text-sm text-slate-400">{businessLimitText}</p>
@@ -139,7 +139,7 @@ export function BusinessProfileClient({
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border border-indigo-700/70 bg-indigo-950/30 p-5"
+          className="rounded-2xl border border-indigo-700/70 bg-indigo-950/30 p-4 sm:p-5"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -178,7 +178,7 @@ export function BusinessProfileClient({
 
       <form
         onSubmit={handleCreateBusiness}
-        className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-6"
+        className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-4 sm:p-6"
       >
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
@@ -189,7 +189,7 @@ export function BusinessProfileClient({
               name="businessName"
               type="text"
               required
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none transition focus:border-indigo-500"
+              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none transition focus:border-indigo-500 sm:text-sm"
             />
           </div>
           <div className="space-y-2">
@@ -200,7 +200,7 @@ export function BusinessProfileClient({
               name="category"
               type="text"
               placeholder="Dentist, Cafe, Plumber..."
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none transition focus:border-indigo-500"
+              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none transition focus:border-indigo-500 sm:text-sm"
             />
           </div>
         </div>
@@ -214,7 +214,7 @@ export function BusinessProfileClient({
             type="url"
             required
             placeholder="https://g.page/r/your-business/review"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none transition focus:border-indigo-500"
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none transition focus:border-indigo-500 sm:text-sm"
           />
         </div>
 
@@ -226,7 +226,7 @@ export function BusinessProfileClient({
             name="contactEmail"
             type="email"
             placeholder="owner@business.com"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none transition focus:border-indigo-500"
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none transition focus:border-indigo-500 sm:text-sm"
           />
         </div>
 
@@ -256,18 +256,21 @@ export function BusinessProfileClient({
               key={business.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/50 p-4"
+              className="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/50 p-4 sm:flex-row sm:items-center sm:justify-between"
             >
-              <div className="flex items-center gap-3">
-                <Store className="h-5 w-5 text-slate-400" />
-                <div>
+              <div className="flex min-w-0 items-start gap-3">
+                <Store className="mt-0.5 h-5 w-5 shrink-0 text-slate-400" />
+                <div className="min-w-0">
                   <p className="text-sm font-medium text-slate-100">{business.name}</p>
-                  <p className="text-xs text-slate-400">/{business.id}</p>
+                  <p className="break-all font-mono text-[11px] leading-snug text-slate-400 sm:text-xs">
+                    /{business.id}
+                  </p>
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => handleDownloadQr(business.id)}
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-200 transition hover:bg-slate-800"
+                className="inline-flex items-center justify-center gap-2 self-start rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-200 transition hover:bg-slate-800 sm:self-center"
               >
                 <Download className="h-4 w-4" />
                 Download QR

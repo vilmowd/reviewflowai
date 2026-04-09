@@ -22,15 +22,15 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <section className="mx-auto max-w-5xl space-y-8 py-6 sm:py-10">
-      <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 sm:p-10">
+    <section className="mx-auto max-w-5xl space-y-6 py-4 sm:space-y-8 sm:py-10">
+      <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:rounded-3xl sm:p-10">
         <p className="text-sm font-medium text-indigo-300">
           Local Business Review Management
         </p>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+        <h1 className="mt-3 text-balance text-2xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
           Grow 5-star reviews and resolve issues privately.
         </h1>
-        <p className="mt-4 max-w-3xl text-sm text-slate-300 sm:text-base">
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
           ReviewFlow AI gives every business a QR-powered feedback funnel:
           satisfied customers are directed to Google reviews, and unhappy customers
           are routed to a private form.

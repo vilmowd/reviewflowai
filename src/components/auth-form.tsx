@@ -42,8 +42,8 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
   }
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
-      <h1 className="text-2xl font-semibold text-white">
+    <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-6">
+      <h1 className="text-balance text-xl font-semibold text-white sm:text-2xl">
         {mode === "login" ? "Sign in" : "Create account"}
       </h1>
       <p className="mt-1 text-sm text-slate-400">
@@ -56,7 +56,7 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
             name="fullName"
             type="text"
             placeholder="Full name"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
           />
         )}
         <input
@@ -64,7 +64,7 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
           type="email"
           required
           placeholder="Email"
-          className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+          className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
         />
         <input
           name="password"
@@ -72,13 +72,13 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
           required
           minLength={8}
           placeholder="Password"
-          className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+          className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
         />
         {error && <p className="text-sm text-rose-300">{error}</p>}
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-indigo-400 disabled:opacity-60"
+          className="min-h-12 w-full rounded-xl bg-indigo-500 px-4 py-3 text-sm font-medium text-white hover:bg-indigo-400 disabled:opacity-60"
         >
           {loading ? "Please wait..." : mode === "login" ? "Sign in" : "Create account"}
         </button>

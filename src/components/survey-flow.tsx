@@ -57,7 +57,7 @@ export function SurveyFlow({
   }
 
   return (
-    <div className="mx-auto w-full max-w-xl">
+    <div className="mx-auto w-full min-w-0 max-w-xl">
       <AnimatePresence mode="wait">
         {step === "choice" && (
           <motion.section
@@ -67,8 +67,9 @@ export function SurveyFlow({
             exit={{ opacity: 0, y: -24 }}
             className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5 sm:p-8"
           >
-            <h1 className="text-xl font-semibold text-white sm:text-2xl">
-              How was your experience with {businessName}?
+            <h1 className="text-balance text-xl font-semibold text-white sm:text-2xl">
+              How was your experience with{" "}
+              <span className="break-words">{businessName}</span>?
             </h1>
             <p className="mt-2 text-sm text-slate-400">
               Your feedback helps improve service quality.
@@ -123,19 +124,19 @@ export function SurveyFlow({
               minLength={3}
               rows={5}
               placeholder="What could we improve?"
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none focus:border-indigo-500"
+              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
             />
             <input
               name="customerName"
               type="text"
               placeholder="Your name (optional)"
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
             />
             <input
               name="customerEmail"
               type="email"
               placeholder="Your email (optional)"
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
             />
             {error && <p className="text-sm text-rose-300">{error}</p>}
             <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">

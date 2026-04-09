@@ -7,7 +7,7 @@ type LegalPageLayoutProps = {
 
 export function LegalPageLayout({ title, children }: LegalPageLayoutProps) {
   return (
-    <article className="mx-auto max-w-3xl pb-16">
+    <article className="mx-auto min-w-0 max-w-3xl pb-12 sm:pb-16">
       <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
         {title}
       </h1>

@@ -56,7 +56,9 @@ export function DashboardStats({
             <p className="text-sm text-slate-400">{card.label}</p>
             <card.icon className="h-4 w-4 text-indigo-300" />
           </div>
-          <p className="mt-4 text-3xl font-semibold text-white">{card.value}</p>
+          <p className="mt-4 break-all text-2xl font-semibold tabular-nums text-white sm:break-normal sm:text-3xl">
+            {card.value}
+          </p>
           <p className="mt-2 inline-flex items-center gap-1 text-xs text-emerald-300">
             <ArrowUpRight className="h-3.5 w-3.5" />
             Live preview metrics
