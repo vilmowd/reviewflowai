@@ -21,10 +21,19 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function loadEnvFile() {
-  const envPath = path.join(__dirname, "..", ".env");
-  if (!fs.existsSync(envPath)) return;
-  const text = fs.readFileSync(envPath, "utf8");
-  for (const line of text.split(/\n")) {
+  const nextToScript = path.join(__dirname, "..", ".env");
+  const inCwd = path.join(process.cwd(), ".env");
+  const envPath = fs.existsSync(nextToScript)
+    ? nextToScript
+    : fs.existsSync(inCwd)
+      ? inCwd
+      : nextToScript;
+  if (!fs.existsSync(envPath)) {
+    console.error(`No .env file found. Tried:\n  ${nextToScript}\n  ${inCwd}`);
+    return;
+  }
+  const text = fs.readFileSync(envPath, "utf8").replace(/^\uFEFF/, "");
+  for (const line of text.split("\n")) {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith("#")) continue;
     const eq = trimmed.indexOf("=");
@@ -37,7 +46,8 @@ function loadEnvFile() {
     ) {
       val = val.slice(1, -1);
     }
-    if (process.env[key] === undefined) process.env[key] = val;
+    // Always apply .env values so this script wins over empty inherited env vars.
+    process.env[key] = val;
   }
 }
 
@@ -158,10 +168,13 @@ async function activatePlan(token, planId) {
       "Content-Type": "application/json",
     },
   });
-  if (!res.ok && res.status !== 204) {
-    const text = await res.text();
-    throw new Error(`Activate plan failed: ${res.status} ${text}`);
+  if (res.ok || res.status === 204) return;
+  const text = await res.text();
+  // Live API often returns ACTIVE immediately; activate is only for CREATED/INACTIVE.
+  if (res.status === 422 && text.includes("PLAN_STATUS_INVALID")) {
+    return;
   }
+  throw new Error(`Activate plan failed: ${res.status} ${text}`);
 }
 
 async function main() {
@@ -175,10 +188,15 @@ async function main() {
   console.log("Creating yearly billing plan…");
   const plan = await createPlan(token, productId);
   const planId = plan.id;
-  console.log("  Plan ID (before activate):", planId, "status:", plan.status ?? "—");
+  console.log("  Plan ID:", planId, "status:", plan.status ?? "—");
 
-  console.log("Activating plan…");
-  await activatePlan(token, planId);
+  const st = (plan.status ?? "").toUpperCase();
+  if (st === "ACTIVE") {
+    console.log("Plan is already ACTIVE — skipping activate.");
+  } else {
+    console.log("Activating plan…");
+    await activatePlan(token, planId);
+  }
 
   console.log("");
   console.log("Done. Add this to your .env and Railway:");

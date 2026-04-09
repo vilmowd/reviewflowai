@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono } from "next/font/google";
 import Link from "next/link";
 import { getCsrfTokenFromCookie, getCurrentUser } from "@/lib/auth";
 import { LogoutButton } from "@/components/logout-button";
+import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -79,6 +80,7 @@ export default async function RootLayout({
           </header>
 
           <main className="mx-auto w-full max-w-7xl px-6 py-8">{children}</main>
+          <SiteFooter />
         </div>
       </body>
     </html>
