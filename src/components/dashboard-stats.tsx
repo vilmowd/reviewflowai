@@ -50,16 +50,16 @@ export function DashboardStats({
           initial="hidden"
           animate="visible"
           variants={cardVariants}
-          className="rounded-2xl border border-slate-800 bg-gradient-to-b from-slate-900 to-slate-900/60 p-5 shadow-sm shadow-black/20"
+          className="rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-5 shadow-sm dark:border-slate-800 dark:from-slate-900 dark:to-slate-900/60 dark:shadow-black/20"
         >
           <div className="flex items-start justify-between">
-            <p className="text-sm text-slate-400">{card.label}</p>
-            <card.icon className="h-4 w-4 text-indigo-300" />
+            <p className="text-sm text-slate-600 dark:text-slate-400">{card.label}</p>
+            <card.icon className="h-4 w-4 text-indigo-600 dark:text-indigo-300" />
           </div>
-          <p className="mt-4 break-all text-2xl font-semibold tabular-nums text-white sm:break-normal sm:text-3xl">
+          <p className="mt-4 break-all text-2xl font-semibold tabular-nums text-slate-900 sm:break-normal sm:text-3xl dark:text-white">
             {card.value}
           </p>
-          <p className="mt-2 inline-flex items-center gap-1 text-xs text-emerald-300">
+          <p className="mt-2 inline-flex items-center gap-1 text-xs text-emerald-700 dark:text-emerald-300">
             <ArrowUpRight className="h-3.5 w-3.5" />
             Live preview metrics
           </p>

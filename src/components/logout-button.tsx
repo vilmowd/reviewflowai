@@ -18,7 +18,7 @@ export function LogoutButton({ csrfToken, className = "" }: LogoutButtonProps) {
     <button
       type="button"
       onClick={handleLogout}
-      className={`rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white ${className}`}
+      className={`rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-700 transition hover:bg-slate-200 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white ${className}`}
     >
       Logout
     </button>

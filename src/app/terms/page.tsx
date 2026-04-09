@@ -15,7 +15,7 @@ export default function TermsPage() {
           By accessing or using ReviewFlow AI (“Service”), you agree to these Terms of
           Service. If you do not agree, do not use the Service. The Service is operated
           by the provider identified in our{" "}
-          <a href="/legal" className="text-indigo-400 underline hover:text-indigo-300">
+          <a href="/legal" className="text-indigo-600 underline hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
             Legal Notice
           </a>
           .
@@ -116,7 +116,7 @@ export default function TermsPage() {
         <h2>11. Contact</h2>
         <p>
           For questions about these Terms, contact us using the details in the{" "}
-          <a href="/legal" className="text-indigo-400 underline hover:text-indigo-300">
+          <a href="/legal" className="text-indigo-600 underline hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
             Legal Notice
           </a>
           .

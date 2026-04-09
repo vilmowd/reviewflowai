@@ -42,11 +42,11 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
   }
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-6">
-      <h1 className="text-balance text-xl font-semibold text-white sm:text-2xl">
+    <div className="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none sm:p-6">
+      <h1 className="text-balance text-xl font-semibold text-slate-900 dark:text-white sm:text-2xl">
         {mode === "login" ? "Sign in" : "Create account"}
       </h1>
-      <p className="mt-1 text-sm text-slate-400">
+      <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
         Secure session-based access for your dashboard.
       </p>
 
@@ -56,7 +56,7 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
             name="fullName"
             type="text"
             placeholder="Full name"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-slate-900 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 sm:text-sm"
           />
         )}
         <input
@@ -64,7 +64,7 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
           type="email"
           required
           placeholder="Email"
-          className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
+          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-slate-900 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 sm:text-sm"
         />
         <input
           name="password"
@@ -72,9 +72,9 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
           required
           minLength={8}
           placeholder="Password"
-          className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none focus:border-indigo-500 sm:text-sm"
+          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-slate-900 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 sm:text-sm"
         />
-        {error && <p className="text-sm text-rose-300">{error}</p>}
+        {error && <p className="text-sm text-rose-600 dark:text-rose-300">{error}</p>}
         <button
           type="submit"
           disabled={loading}
@@ -86,7 +86,7 @@ export function AuthForm({ redirectTo = "/dashboard" }: AuthFormProps) {
 
       <button
         onClick={() => setMode(mode === "login" ? "register" : "login")}
-        className="mt-4 text-sm text-slate-400 hover:text-white"
+        className="mt-4 text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
       >
         {mode === "login"
           ? "Need an account? Register"

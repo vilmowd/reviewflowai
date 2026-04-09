@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono } from "next/font/google";
 import { getCsrfTokenFromCookie, getCurrentUser } from "@/lib/auth";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,7 +24,10 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#020617",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+  ],
 };
 
 export default async function RootLayout({
@@ -38,19 +42,22 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${robotoMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full bg-slate-950 text-slate-100">
-        <div className="flex min-h-screen flex-col">
-          <SiteHeader
-            user={user ? { email: user.email } : null}
-            csrfToken={csrfToken}
-          />
+      <body className="min-h-full bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+        <ThemeProvider>
+          <div className="flex min-h-screen flex-col">
+            <SiteHeader
+              user={user ? { email: user.email } : null}
+              csrfToken={csrfToken}
+            />
 
-          <main className="mx-auto w-full min-w-0 max-w-7xl flex-1 px-4 py-6 sm:px-6 sm:py-8">
-            {children}
-          </main>
-          <SiteFooter />
-        </div>
+            <main className="mx-auto w-full min-w-0 max-w-7xl flex-1 px-4 py-6 sm:px-6 sm:py-8">
+              {children}
+            </main>
+            <SiteFooter />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

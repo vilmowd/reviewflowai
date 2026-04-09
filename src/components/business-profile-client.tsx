@@ -127,29 +127,31 @@ export function BusinessProfileClient({
 
   return (
     <section className="space-y-5 sm:space-y-6">
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 sm:p-6">
-        <p className="text-sm font-medium text-indigo-300">Settings</p>
-        <h1 className="mt-2 text-balance text-xl font-semibold tracking-tight text-white sm:text-2xl">
+      <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none sm:p-6">
+        <p className="text-sm font-medium text-indigo-600 dark:text-indigo-300">Settings</p>
+        <h1 className="mt-2 text-balance text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
           Business Profile
         </h1>
-        <p className="mt-1 text-sm text-slate-400">{businessLimitText}</p>
+        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{businessLimitText}</p>
       </div>
 
       {!canCreateBusiness && !isPro && (
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border border-indigo-700/70 bg-indigo-950/30 p-4 sm:p-5"
+          className="rounded-2xl border border-indigo-200 bg-indigo-50/80 p-4 dark:border-indigo-700/70 dark:bg-indigo-950/30 sm:p-5"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm font-medium text-indigo-200">Upgrade to Pro</p>
-              <p className="mt-1 text-sm text-indigo-300/80">
+              <p className="text-sm font-medium text-indigo-900 dark:text-indigo-200">
+                Upgrade to Pro
+              </p>
+              <p className="mt-1 text-sm text-indigo-800/90 dark:text-indigo-300/80">
                 Unlock unlimited businesses and private feedback email alerts. Pay with
                 Stripe ($29/mo) or{" "}
                 <a
                   href="/subscribe"
-                  className="font-medium text-indigo-200 underline decoration-indigo-500/50 underline-offset-2 hover:text-white"
+                  className="font-medium text-indigo-700 underline decoration-indigo-400/50 underline-offset-2 hover:text-indigo-900 dark:text-indigo-200 dark:hover:text-white"
                 >
                   PayPal ($100/year)
                 </a>
@@ -167,7 +169,7 @@ export function BusinessProfileClient({
               </button>
               <a
                 href="/subscribe"
-                className="inline-flex items-center justify-center rounded-xl border border-indigo-400/40 px-4 py-2 text-sm font-medium text-indigo-100 transition hover:bg-indigo-900/40"
+                className="inline-flex items-center justify-center rounded-xl border border-indigo-300 px-4 py-2 text-sm font-medium text-indigo-800 transition hover:bg-indigo-100 dark:border-indigo-400/40 dark:text-indigo-100 dark:hover:bg-indigo-900/40"
               >
                 PayPal — $100/yr
               </a>
@@ -178,35 +180,35 @@ export function BusinessProfileClient({
 
       <form
         onSubmit={handleCreateBusiness}
-        className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-4 sm:p-6"
+        className="space-y-4 rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60 dark:shadow-none sm:p-6"
       >
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-slate-300">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
               Business Name
             </label>
             <input
               name="businessName"
               type="text"
               required
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none transition focus:border-indigo-500 sm:text-sm"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-slate-900 outline-none transition focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 sm:text-sm"
             />
           </div>
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-slate-300">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
               Category
             </label>
             <input
               name="category"
               type="text"
               placeholder="Dentist, Cafe, Plumber..."
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none transition focus:border-indigo-500 sm:text-sm"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-slate-900 outline-none transition focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 sm:text-sm"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-slate-300">
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
             Google Review Link
           </label>
           <input
@@ -214,24 +216,24 @@ export function BusinessProfileClient({
             type="url"
             required
             placeholder="https://g.page/r/your-business/review"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none transition focus:border-indigo-500 sm:text-sm"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-slate-900 outline-none transition focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 sm:text-sm"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-slate-300">
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
             Notification Email
           </label>
           <input
             name="contactEmail"
             type="email"
             placeholder="owner@business.com"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-base text-slate-100 outline-none transition focus:border-indigo-500 sm:text-sm"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-base text-slate-900 outline-none transition focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 sm:text-sm"
           />
         </div>
 
-        {message && <p className="text-sm text-emerald-300">{message}</p>}
-        {error && <p className="text-sm text-rose-300">{error}</p>}
+        {message && <p className="text-sm text-emerald-700 dark:text-emerald-300">{message}</p>}
+        {error && <p className="text-sm text-rose-600 dark:text-rose-300">{error}</p>}
 
         <button
           type="submit"
@@ -244,9 +246,11 @@ export function BusinessProfileClient({
       </form>
 
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-slate-100">Your Businesses</h2>
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+          Your Businesses
+        </h2>
         {items.length === 0 && (
-          <p className="rounded-xl border border-dashed border-slate-700 bg-slate-900/40 p-4 text-sm text-slate-400">
+          <p className="rounded-xl border border-dashed border-slate-300 bg-slate-50/80 p-4 text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-400">
             No businesses yet. Create one above to generate your first QR code.
           </p>
         )}
@@ -256,13 +260,15 @@ export function BusinessProfileClient({
               key={business.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/50 p-4 sm:flex-row sm:items-center sm:justify-between"
+              className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white/80 p-4 dark:border-slate-800 dark:bg-slate-900/50 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="flex min-w-0 items-start gap-3">
-                <Store className="mt-0.5 h-5 w-5 shrink-0 text-slate-400" />
+                <Store className="mt-0.5 h-5 w-5 shrink-0 text-slate-500 dark:text-slate-400" />
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-slate-100">{business.name}</p>
-                  <p className="break-all font-mono text-[11px] leading-snug text-slate-400 sm:text-xs">
+                  <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                    {business.name}
+                  </p>
+                  <p className="break-all font-mono text-[11px] leading-snug text-slate-500 dark:text-slate-400 sm:text-xs">
                     /{business.id}
                   </p>
                 </div>
@@ -270,7 +276,7 @@ export function BusinessProfileClient({
               <button
                 type="button"
                 onClick={() => handleDownloadQr(business.id)}
-                className="inline-flex items-center justify-center gap-2 self-start rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-200 transition hover:bg-slate-800 sm:self-center"
+                className="inline-flex items-center justify-center gap-2 self-start rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 sm:self-center"
               >
                 <Download className="h-4 w-4" />
                 Download QR

@@ -15,7 +15,7 @@ export default function PrivacyPage() {
           ReviewFlow AI (“we”, “us”) provides an online service for businesses to manage
           feedback and review-related workflows. The operator’s contact details are listed
           in our{" "}
-          <a href="/legal" className="text-indigo-400 underline hover:text-indigo-300">
+          <a href="/legal" className="text-indigo-600 underline hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
             Legal Notice
           </a>
           .
@@ -106,7 +106,7 @@ export default function PrivacyPage() {
           Depending on your location, you may have rights to access, correct, delete, or
           restrict processing of your personal information, and to object to certain
           processing or port data. To exercise rights, contact us using the details in the{" "}
-          <a href="/legal" className="text-indigo-400 underline hover:text-indigo-300">
+          <a href="/legal" className="text-indigo-600 underline hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
             Legal Notice
           </a>
           . You may also lodge a complaint with a supervisory authority.
@@ -142,7 +142,7 @@ export default function PrivacyPage() {
         <h2>12. Contact</h2>
         <p>
           For privacy inquiries, contact us using the details in the{" "}
-          <a href="/legal" className="text-indigo-400 underline hover:text-indigo-300">
+          <a href="/legal" className="text-indigo-600 underline hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
             Legal Notice
           </a>
           .

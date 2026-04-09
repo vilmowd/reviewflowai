@@ -76,8 +76,8 @@ export function PayPalSubscribeButtons({
           }}
         />
       </PayPalScriptProvider>
-      {message && <p className="text-sm text-emerald-300">{message}</p>}
-      {error && <p className="text-sm text-rose-300">{error}</p>}
+      {message && <p className="text-sm text-emerald-700 dark:text-emerald-300">{message}</p>}
+      {error && <p className="text-sm text-rose-600 dark:text-rose-300">{error}</p>}
     </div>
   );
 }
