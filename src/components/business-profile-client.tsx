@@ -3,7 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import QRCode from "qrcode";
-import { CreditCard, Download, Plus, Store } from "lucide-react";
+import { Download, Plus, Store } from "lucide-react";
 
 type Business = {
   id: string;
@@ -28,7 +28,6 @@ export function BusinessProfileClient({
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   const businessLimitText = useMemo(() => {
     if (isPro) return "Pro plan: unlimited businesses and email alerts enabled.";
@@ -82,31 +81,6 @@ export function BusinessProfileClient({
     }
   }
 
-  async function handleUpgrade() {
-    setCheckoutLoading(true);
-    setError(null);
-    try {
-      const response = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: {
-          "x-csrf-token": csrfToken,
-        },
-      });
-      const result = await response.json();
-      if (!response.ok || !result.url) {
-        throw new Error(result.error ?? "Unable to create checkout session.");
-      }
-      window.location.href = result.url;
-    } catch (checkoutError) {
-      setError(
-        checkoutError instanceof Error
-          ? checkoutError.message
-          : "Unable to start checkout.",
-      );
-      setCheckoutLoading(false);
-    }
-  }
-
   async function handleDownloadQr(businessId: string) {
     const origin = window.location.origin;
     const targetUrl = `${origin}/${businessId}`;
@@ -147,29 +121,14 @@ export function BusinessProfileClient({
                 Upgrade to Pro
               </p>
               <p className="mt-1 text-sm text-indigo-800/90 dark:text-indigo-300/80">
-                Unlock unlimited businesses and private feedback email alerts. Pay with
-                Stripe ($29/mo) or{" "}
-                <a
-                  href="/subscribe"
-                  className="font-medium text-indigo-700 underline decoration-indigo-400/50 underline-offset-2 hover:text-indigo-900 dark:text-indigo-200 dark:hover:text-white"
-                >
-                  PayPal ($100/year)
-                </a>
-                .
+                Unlock unlimited businesses and private feedback email alerts. Subscribe with
+                PayPal for $100/year (cancel anytime from your PayPal account).
               </p>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center">
-              <button
-                onClick={handleUpgrade}
-                disabled={checkoutLoading}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-400 disabled:opacity-60"
-              >
-                <CreditCard className="h-4 w-4" />
-                {checkoutLoading ? "Redirecting..." : "Stripe — $29/mo"}
-              </button>
               <a
                 href="/subscribe"
-                className="inline-flex items-center justify-center rounded-xl border border-indigo-300 px-4 py-2 text-sm font-medium text-indigo-800 transition hover:bg-indigo-100 dark:border-indigo-400/40 dark:text-indigo-100 dark:hover:bg-indigo-900/40"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-400"
               >
                 PayPal — $100/yr
               </a>

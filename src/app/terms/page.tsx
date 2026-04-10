@@ -55,8 +55,8 @@ export default function TermsPage() {
       <section className="space-y-3">
         <h2>5. Subscriptions and payments</h2>
         <p>
-          Paid plans may be offered through third-party processors (for example PayPal or
-          Stripe). Fees, billing cycles, and renewal terms are shown at checkout. You
+          Paid plans may be offered through third-party processors (for example PayPal).
+          Fees, billing cycles, and renewal terms are shown at checkout. You
           authorize us and our payment partners to charge your chosen payment method.
           Cancellations and refunds are governed by the applicable payment provider’s
           rules and any terms presented at purchase.

@@ -46,7 +46,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong className="text-slate-300">Payment data:</strong> payments are handled
-            by third-party processors (such as PayPal or Stripe). We typically receive
+            by third-party processors (such as PayPal). We typically receive
             limited billing metadata, not full card numbers.
           </li>
         </ul>
