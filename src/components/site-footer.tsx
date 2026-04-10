@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AccessibilityFooterControls } from "@/components/accessibility-footer-controls";
 import { BrandMark } from "@/components/brand-mark";
 
 const productLinks = [
@@ -18,7 +19,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-slate-200 bg-slate-100/80 dark:border-slate-800/90 dark:bg-slate-950">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-3">
               <BrandMark variant="footer" />
@@ -72,6 +73,23 @@ export function SiteFooter() {
               ))}
             </ul>
           </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              Accessibility
+            </p>
+            <ul className="mt-4 space-y-2.5">
+              <li>
+                <Link
+                  href="/accessibility"
+                  className="text-sm text-slate-600 transition hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-300"
+                >
+                  Statement & help
+                </Link>
+              </li>
+            </ul>
+            <AccessibilityFooterControls />
+          </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-slate-200 pt-8 dark:border-slate-800/80 sm:flex-row sm:items-center sm:justify-between">
@@ -99,6 +117,12 @@ export function SiteFooter() {
               className="transition hover:text-slate-800 dark:hover:text-slate-400"
             >
               Privacy
+            </Link>
+            <Link
+              href="/accessibility"
+              className="transition hover:text-slate-800 dark:hover:text-slate-400"
+            >
+              Accessibility
             </Link>
           </div>
         </div>

@@ -36,3 +36,30 @@ body {
 .dark * {
   border-color: rgb(30 41 59);
 }
+
+/* Footer accessibility: user-toggled (see AccessibilityFooterControls) */
+html.rf-large-text {
+  font-size: 112.5%;
+}
+
+html.rf-reduce-motion *,
+html.rf-reduce-motion *::before,
+html.rf-reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+html.rf-reduce-motion {
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
