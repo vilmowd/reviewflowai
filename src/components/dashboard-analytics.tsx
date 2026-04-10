@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CONCERN_OPTIONS } from "@/lib/concern-tags";
 
 const CONCERN_LABEL = Object.fromEntries(
@@ -15,6 +16,8 @@ type RecentRow = {
 
 type DashboardAnalyticsProps = {
   rangeLabel: string;
+  /** Private feedback text/themes are only loaded and shown for Pro. */
+  isPro: boolean;
   surveyOpens: number;
   ratedSessions: number;
   googleHandoffs: number;
@@ -37,8 +40,28 @@ function truncate(s: string, max: number) {
   return `${t.slice(0, max - 1)}…`;
 }
 
+function PrivateFeedbackProUpsell() {
+  return (
+    <div className="mt-6 rounded-xl border border-dashed border-indigo-300/80 bg-indigo-50/60 p-5 text-center dark:border-indigo-500/40 dark:bg-indigo-950/30">
+      <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
+        Buy Pro to see negative reviews from private forms
+      </p>
+      <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
+        Upgrade to read full comments, themes, and details from 1–3★ submissions.
+      </p>
+      <Link
+        href="/subscribe"
+        className="mt-4 inline-flex min-h-10 items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
+      >
+        View Pro plans
+      </Link>
+    </div>
+  );
+}
+
 export function DashboardAnalytics({
   rangeLabel,
+  isPro,
   surveyOpens,
   ratedSessions,
   googleHandoffs,
@@ -153,7 +176,9 @@ export function DashboardAnalytics({
           <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
             Tags guests picked when something missed the mark.
           </p>
-          {topConcerns.length === 0 ? (
+          {!isPro ? (
+            <PrivateFeedbackProUpsell />
+          ) : topConcerns.length === 0 ? (
             <p className="mt-6 text-sm text-slate-600 dark:text-slate-400">
               No tagged private feedback in this period yet.
             </p>
@@ -184,7 +209,9 @@ export function DashboardAnalytics({
         <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
           Newest submissions across all locations ({rangeLabel}).
         </p>
-        {recentFeedback.length === 0 ? (
+        {!isPro ? (
+          <PrivateFeedbackProUpsell />
+        ) : recentFeedback.length === 0 ? (
           <p className="mt-6 text-sm text-slate-600 dark:text-slate-400">
             No private feedback in this window. When guests rate 1–3★, their notes
             show up here.

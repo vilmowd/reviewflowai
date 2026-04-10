@@ -37,6 +37,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   });
 
   const businessIds = businesses.map((b) => b.id);
+  const isPro = user.plan === "PRO";
 
   let surveyOpens = 0;
   let ratedSessions = 0;
@@ -56,6 +57,12 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   }[] = [];
 
   if (businessIds.length > 0) {
+    const privateFeedbackWhere = {
+      businessId: { in: businessIds },
+      rating: { lte: 3 },
+      ...(dateWhere && { createdAt: dateWhere }),
+    } as const;
+
     const [sv, ss, gc, pi, starGroups, feedbackRows, recent] = await Promise.all([
       prisma.funnelEvent.count({
         where: {
@@ -79,11 +86,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
         },
       }),
       prisma.feedback.count({
-        where: {
-          businessId: { in: businessIds },
-          rating: { lte: 3 },
-          ...(dateWhere && { createdAt: dateWhere }),
-        },
+        where: privateFeedbackWhere,
       }),
       prisma.funnelEvent.groupBy({
         by: ["rating"],
@@ -95,24 +98,20 @@ export default async function DashboardPage({ searchParams }: PageProps) {
         },
         _count: { _all: true },
       }),
-      prisma.feedback.findMany({
-        where: {
-          businessId: { in: businessIds },
-          rating: { lte: 3 },
-          ...(dateWhere && { createdAt: dateWhere }),
-        },
-        select: { concernTags: true },
-      }),
-      prisma.feedback.findMany({
-        where: {
-          businessId: { in: businessIds },
-          rating: { lte: 3 },
-          ...(dateWhere && { createdAt: dateWhere }),
-        },
-        orderBy: { createdAt: "desc" },
-        take: 8,
-        include: { business: { select: { name: true } } },
-      }),
+      isPro
+        ? prisma.feedback.findMany({
+            where: privateFeedbackWhere,
+            select: { concernTags: true },
+          })
+        : Promise.resolve([]),
+      isPro
+        ? prisma.feedback.findMany({
+            where: privateFeedbackWhere,
+            orderBy: { createdAt: "desc" },
+            take: 8,
+            include: { business: { select: { name: true } } },
+          })
+        : Promise.resolve([]),
     ]);
 
     surveyOpens = sv;
@@ -137,25 +136,27 @@ export default async function DashboardPage({ searchParams }: PageProps) {
       })),
     );
 
-    const tagCount: Record<string, number> = {};
-    for (const f of feedbackRows) {
-      for (const t of f.concernTags) {
-        tagCount[t] = (tagCount[t] ?? 0) + 1;
+    if (isPro) {
+      const tagCount: Record<string, number> = {};
+      for (const f of feedbackRows) {
+        for (const t of f.concernTags) {
+          tagCount[t] = (tagCount[t] ?? 0) + 1;
+        }
       }
-    }
-    topConcerns = Object.entries(tagCount)
-      .map(([tag, count]) => ({ tag, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 6);
+      topConcerns = Object.entries(tagCount)
+        .map(([tag, count]) => ({ tag, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 6);
 
-    recentFeedback = recent.map((r) => ({
-      id: r.id,
-      businessName: r.business.name,
-      rating: r.rating,
-      comment: r.comment,
-      createdAt: r.createdAt,
-      concernTags: r.concernTags,
-    }));
+      recentFeedback = recent.map((r) => ({
+        id: r.id,
+        businessName: r.business.name,
+        rating: r.rating,
+        comment: r.comment,
+        createdAt: r.createdAt,
+        concernTags: r.concernTags,
+      }));
+    }
   }
 
   const rangeLinks = [
@@ -215,6 +216,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
       {businesses.length > 0 ? (
         <DashboardAnalytics
           rangeLabel={rangeLabel(range)}
+          isPro={isPro}
           surveyOpens={surveyOpens}
           ratedSessions={ratedSessions}
           googleHandoffs={googleHandoffs}
