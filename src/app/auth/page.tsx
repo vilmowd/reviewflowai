@@ -12,16 +12,19 @@ function safeRedirectPath(path: string | undefined) {
 export default async function AuthPage({
   searchParams,
 }: {
-  searchParams: { redirect?: string };
+  searchParams: { redirect?: string; next?: string };
 }) {
   const user = await getCurrentUser();
+  const redirectTarget = safeRedirectPath(
+    searchParams.redirect ?? searchParams.next,
+  );
   if (user) {
-    redirect(safeRedirectPath(searchParams.redirect));
+    redirect(redirectTarget);
   }
 
   return (
     <section className="mx-auto max-w-md py-10">
-      <AuthForm redirectTo={safeRedirectPath(searchParams.redirect)} />
+      <AuthForm redirectTo={redirectTarget} />
     </section>
   );
 }

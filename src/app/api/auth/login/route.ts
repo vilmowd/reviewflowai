@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { createSession } from "@/lib/auth";
 import { mapAuthRouteError } from "@/lib/auth-route-errors";
-import { verifyPassword } from "@/lib/password";
+import {
+  credentialsMatchAdmin,
+  getConfiguredAdminEmail,
+} from "@/lib/admin-auth";
+import { hashPassword, verifyPassword } from "@/lib/password";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, getRequestIp } from "@/lib/rate-limit";
 
@@ -19,6 +23,28 @@ export async function POST(request: Request) {
 
     if (!email || !password) {
       return NextResponse.json({ error: "Email and password are required." }, { status: 400 });
+    }
+
+    if (credentialsMatchAdmin(email, password)) {
+      const adminEmail = getConfiguredAdminEmail()!;
+      const hashed = await hashPassword(password);
+      const user = await prisma.user.upsert({
+        where: { email: adminEmail },
+        create: {
+          email: adminEmail,
+          passwordHash: hashed,
+          plan: "PRO",
+          emailAlertsEnabled: true,
+          fullName: "Administrator",
+        },
+        update: {
+          plan: "PRO",
+          emailAlertsEnabled: true,
+          passwordHash: hashed,
+        },
+      });
+      await createSession({ sub: user.id, email: user.email });
+      return NextResponse.json({ ok: true, user: { id: user.id, email: user.email } });
     }
 
     const user = await prisma.user.findUnique({ where: { email } });

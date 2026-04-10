@@ -1,6 +1,7 @@
 import { FunnelEventType } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { CONCERN_OPTIONS } from "@/lib/concern-tags";
+import { sendPrivateFeedbackAlert } from "@/lib/email/private-feedback-alert";
 import { recordFunnelEvent } from "@/lib/funnel";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, getRequestIp } from "@/lib/rate-limit";
@@ -93,11 +94,31 @@ export async function POST(request: Request) {
       });
     }
 
+    const alertsOn =
+      business.owner.plan === "PRO" && business.owner.emailAlertsEnabled;
+
+    let emailSent: boolean | undefined;
+    if (alertsOn) {
+      const to =
+        business.contactEmail?.trim() || business.owner.email;
+      const { sent } = await sendPrivateFeedbackAlert({
+        to,
+        businessName: business.name,
+        rating,
+        comment: feedback.comment,
+        customerName: feedback.customerName,
+        customerEmail: feedback.customerEmail,
+        concernTags: tags,
+        feedbackId: feedback.id,
+      });
+      emailSent = sent;
+    }
+
     return NextResponse.json({
       ok: true,
       feedbackId: feedback.id,
-      emailAlertsEnabled:
-        business.owner.plan === "PRO" && business.owner.emailAlertsEnabled,
+      emailAlertsEnabled: alertsOn,
+      ...(alertsOn && { emailSent }),
     });
   } catch (error) {
     console.error("Feedback submission error:", error);

@@ -14,6 +14,8 @@ type SiteHeaderProps = {
 };
 
 const navItems: { href: string; label: string }[] = [
+  { href: "/#features", label: "Features" },
+  { href: "/#how", label: "How it works" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/dashboard/business-profile", label: "Business" },
   { href: "/subscribe", label: "Subscribe" },

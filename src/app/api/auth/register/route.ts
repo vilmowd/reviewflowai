@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSession } from "@/lib/auth";
 import { mapAuthRouteError } from "@/lib/auth-route-errors";
+import { isAdminEmailReserved } from "@/lib/admin-auth";
 import { hashPassword } from "@/lib/password";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, getRequestIp } from "@/lib/rate-limit";
@@ -22,6 +23,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Email and password (min 8 chars) are required." },
         { status: 400 },
+      );
+    }
+
+    if (isAdminEmailReserved(email)) {
+      return NextResponse.json(
+        { error: "This email is reserved for the administrator account." },
+        { status: 403 },
       );
     }
 
