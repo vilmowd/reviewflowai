@@ -1,6 +1,13 @@
+import { FunnelEventType } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { CONCERN_OPTIONS } from "@/lib/concern-tags";
+import { recordFunnelEvent } from "@/lib/funnel";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, getRequestIp } from "@/lib/rate-limit";
+
+const ALLOWED_CONCERN_TAGS: Set<string> = new Set(
+  CONCERN_OPTIONS.map((o) => o.id),
+);
 
 export async function POST(request: Request) {
   try {
@@ -11,7 +18,15 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { businessId, rating, comment, customerName, customerEmail } = body;
+    const {
+      businessId,
+      rating,
+      comment,
+      customerName,
+      customerEmail,
+      concernTags,
+      sessionId,
+    } = body;
 
     if (!businessId || typeof comment !== "string" || comment.trim().length < 3) {
       return NextResponse.json(
@@ -25,6 +40,27 @@ export async function POST(request: Request) {
         { error: "Private feedback supports ratings 1-3." },
         { status: 400 },
       );
+    }
+
+    let tags: string[] = [];
+    if (concernTags !== undefined) {
+      if (!Array.isArray(concernTags)) {
+        return NextResponse.json({ error: "Invalid concern tags." }, { status: 400 });
+      }
+      tags = concernTags.filter((t: unknown) => typeof t === "string") as string[];
+      if (tags.some((t) => !ALLOWED_CONCERN_TAGS.has(t))) {
+        return NextResponse.json({ error: "Invalid concern tag value." }, { status: 400 });
+      }
+      if (tags.length > 6) {
+        return NextResponse.json({ error: "Too many concern tags." }, { status: 400 });
+      }
+    }
+
+    if (
+      sessionId !== undefined &&
+      (typeof sessionId !== "string" || sessionId.length < 8 || sessionId.length > 128)
+    ) {
+      return NextResponse.json({ error: "Invalid session id." }, { status: 400 });
     }
 
     const business = await prisma.business.findUnique({
@@ -43,8 +79,19 @@ export async function POST(request: Request) {
         comment: comment.trim(),
         customerName: customerName?.trim() || null,
         customerEmail: customerEmail?.trim() || null,
+        concernTags: tags,
       },
     });
+
+    if (sessionId) {
+      await recordFunnelEvent({
+        businessId,
+        sessionId,
+        eventType: FunnelEventType.PRIVATE_FEEDBACK_SUBMIT,
+        rating,
+        metadata: { feedbackId: feedback.id },
+      });
+    }
 
     return NextResponse.json({
       ok: true,

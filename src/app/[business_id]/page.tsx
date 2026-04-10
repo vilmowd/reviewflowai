@@ -45,6 +45,7 @@ export default async function SurveyPage({ params }: SurveyPageProps) {
     select: {
       id: true,
       name: true,
+      category: true,
       googleReviewLink: true,
     },
   });
@@ -58,6 +59,7 @@ export default async function SurveyPage({ params }: SurveyPageProps) {
       <SurveyFlow
         businessId={business.id}
         businessName={business.name}
+        category={business.category}
         googleReviewLink={business.googleReviewLink}
       />
     </section>

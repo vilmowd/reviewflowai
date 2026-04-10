@@ -30,17 +30,18 @@ model User {
 }
 
 model Business {
-  id               String     @id @default(uuid())
+  id               String        @id @default(uuid())
   ownerId          String
   name             String
-  slug             String     @unique
+  slug             String        @unique
   category         String?
   googleReviewLink String
   contactEmail     String?
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
-  owner            User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  owner            User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   feedbacks        Feedback[]
+  funnelEvents     FunnelEvent[]
 
   @@index([ownerId])
 }
@@ -52,6 +53,7 @@ model Feedback {
   customerEmail String?
   rating        Int
   comment       String
+  concernTags   String[]       @default([])
   status        FeedbackStatus @default(NEW)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -59,6 +61,29 @@ model Feedback {
 
   @@index([businessId, createdAt])
   @@index([rating])
+}
+
+model FunnelEvent {
+  id         String          @id @default(uuid())
+  businessId String
+  sessionId  String
+  eventType  FunnelEventType
+  rating     Int?
+  metadata   Json?
+  createdAt  DateTime        @default(now())
+  business   Business        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, createdAt])
+  @@index([businessId, eventType, createdAt])
+  @@index([sessionId])
+}
+
+enum FunnelEventType {
+  SURVEY_VIEW
+  STARS_SELECTED
+  GOOGLE_REDIRECT_CLICK
+  PRIVATE_FLOW_STARTED
+  PRIVATE_FEEDBACK_SUBMIT
 }
 
 enum FeedbackStatus {
